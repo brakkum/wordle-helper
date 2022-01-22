@@ -3,8 +3,7 @@ import {useEffect, useState} from "react";
 import {Word} from "./Word";
 import {Box, Grid, TextField} from "@mui/material";
 import {useWindowSize} from "./useWindowSize";
-import {range, intersectionWith, isEqual, differenceWith} from 'lodash';
-import {notEqual} from "assert";
+import {range} from 'lodash';
 
 const possibleInfo = [
   '',
