@@ -1,7 +1,7 @@
 import {raw_words} from "./raw_words";
 import {useEffect, useState} from "react";
 import {Word} from "./Word";
-import {Box, Button, Grid, TextField} from "@mui/material";
+import {Box, Grid, TextField} from "@mui/material";
 import {useWindowSize} from "./useWindowSize";
 
 const possibleInfo = [
@@ -47,7 +47,7 @@ function WordleHelper() {
 
   let possible = [...words];
 
-  currentWordInfo.map((info, i) => {
+  currentWordInfo.forEach((info, i) => {
     switch (info) {
       case '': {
         possible = possible.filter(word => {
@@ -71,7 +71,6 @@ function WordleHelper() {
         break;
       }
     }
-
   });
 
   return (
