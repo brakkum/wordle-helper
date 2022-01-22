@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {Word} from "./Word";
 import {Box, Grid, TextField} from "@mui/material";
 import {useWindowSize} from "./useWindowSize";
+import {range, intersectionWith, isEqual, differenceWith} from 'lodash';
+import {notEqual} from "assert";
 
 const possibleInfo = [
   '',
@@ -35,6 +37,7 @@ function WordleHelper() {
   }, []);
 
   const setAndLimitWord = (w: string) => {
+    w = w.toLowerCase();
     if (w.length > 5) {
       w = w.substring(0, 5);
     }
@@ -47,17 +50,26 @@ function WordleHelper() {
 
   let possible = [...words];
 
+  const indexesCertain: number[] = currentWordInfo.reduce<number[]>((arr, info, i) => {
+    if (info === 'is') {
+      return [...arr, i];
+    }
+    return arr;
+  }, []);
+
   currentWordInfo.forEach((info, i) => {
+    const otherIndexes = range(currentWordInfo.length).filter(k => k !== i);
+    const otherUncertainIndexes = otherIndexes.filter(i => !indexesCertain.includes(i));
     switch (info) {
       case '': {
         possible = possible.filter(word => {
-          return !word.contains(currentWord[i]);
+          return !word.contains(currentWord[i], otherUncertainIndexes);
         });
         break;
       }
       case 'has': {
         possible = possible.filter(word => {
-          return word.contains(currentWord[i]) && !word.has(currentWord[i], i);
+          return word.contains(currentWord[i], otherUncertainIndexes) && !word.has(currentWord[i], i);
         });
         break;
       }
