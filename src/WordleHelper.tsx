@@ -43,7 +43,7 @@ function WordleHelper() {
     setCurrentWord(w);
   };
 
-  if (words === null) {
+  if (words === null || !windowSize.width || !windowSize.height) {
     return <div>one sec</div>
   }
 
@@ -92,8 +92,8 @@ function WordleHelper() {
   });
 
   return (
-    <div style={{width: '100vw', height: '100vh'}}>
-      <Grid container spacing={2} width={'100%'} height={'100%'} direction={windowSize.width && windowSize.width > 800 ? 'row' : 'column'}>
+    <div style={{width: windowSize.width, height: windowSize.height}}>
+      <Grid container spacing={2} width={'100%'} height={'100%'} direction={windowSize.width > 800 ? 'row' : 'column'}>
         <Grid item container xs={6} height='100%' direction='column' justifyContent='center' alignItems='center'>
           <TextField
             value={currentWord}
