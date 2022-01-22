@@ -2,6 +2,7 @@ import {raw_words} from "./raw_words";
 import {useEffect, useState} from "react";
 import {Word} from "./Word";
 import {Box, Button, Grid, TextField} from "@mui/material";
+import {useWindowSize} from "./useWindowSize";
 
 const possibleInfo = [
   '',
@@ -18,6 +19,8 @@ const resolveInfoToColor = (info: string) => {
 }
 
 function WordleHelper() {
+
+  const windowSize = useWindowSize();
 
   const [currentWord, setCurrentWord] = useState('');
   const [currentWordInfo, setCurrentWordInfo] = useState<string[]>(['', '', '', '', ''])
@@ -73,7 +76,7 @@ function WordleHelper() {
 
   return (
     <div style={{width: '100vw', height: '100vh'}}>
-      <Grid container spacing={2} width={'100%'} height={'100%'}>
+      <Grid container spacing={2} width={'100%'} height={'100%'} direction={windowSize.width && windowSize.width > 800 ? 'row' : 'column'}>
         <Grid item container xs={6} height='100%' direction='column' justifyContent='center' alignItems='center'>
           <TextField
             value={currentWord}
@@ -106,7 +109,7 @@ function WordleHelper() {
         </Grid>
         <Grid item container xs={6} height='100vh' overflow='scroll' pt='50px' justifyContent='center' alignItems='center'>
           {possible.map(word => {
-            return <div style={{width: '33%', textAlign: 'center'}} key={word.toString()}>{word.toString()}</div>
+            return <div style={{padding: '15px', textAlign: 'center', fontFamily: 'monospace', fontSize: '16px'}} key={word.toString()}>{word.toString()}</div>
           })}
         </Grid>
       </Grid>
