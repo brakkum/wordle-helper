@@ -118,7 +118,7 @@ function WordleHelper() {
             })}
           </Grid>
         </Grid>
-        <Grid item container xs={6} height='100vh' overflow='scroll' pt='50px' justifyContent='center' alignItems='center'>
+        <Grid item container xs={6} height='100%' overflow='scroll' pt='50px' justifyContent='center' alignItems='center'>
           {possible.map(word => {
             return <div style={{padding: '15px', textAlign: 'center', fontFamily: 'monospace', fontSize: '16px'}} key={word.toString()}>{word.toString()}</div>
           })}
