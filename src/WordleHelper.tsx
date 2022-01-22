@@ -49,8 +49,15 @@ function WordleHelper() {
 
   let possible = [...words];
 
-  const indexesCertain: number[] = currentWordInfo.reduce<number[]>((arr, info, i) => {
+  const indexesCertain = currentWordInfo.reduce<number[]>((arr, info, i) => {
     if (info === 'is') {
+      return [...arr, i];
+    }
+    return arr;
+  }, []);
+
+  const indexesDead = currentWordInfo.reduce<number[]>((arr, info, i) => {
+    if (info === '') {
       return [...arr, i];
     }
     return arr;
@@ -62,7 +69,7 @@ function WordleHelper() {
     switch (info) {
       case '': {
         possible = possible.filter(word => {
-          return !word.contains(currentWord[i], otherUncertainIndexes);
+          return !word.contains(currentWord[i], indexesDead);
         });
         break;
       }
