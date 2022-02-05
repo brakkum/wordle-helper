@@ -11,3 +11,52 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.helper-container {
+  display: grid;
+  grid-template-areas:
+    "guesses words"
+  ;
+  grid-template-columns: 50vw 50vw;
+  grid-template-rows: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+  .helper-container {
+    grid-template-areas:
+      "guesses"
+      "words"
+  ;
+    grid-template-columns: 100vw;
+    grid-template-rows: 50vh 50vh;
+  }
+}
+
+.guesses-container {
+  grid-area: guesses;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow: scroll;
+}
+
+.guesses-container .buttons {
+  margin: 5px;
+}
+
+.guesses-container .guess-container {
+  width: 90%;
+  max-width: 500px;
+  margin: 5px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.words-container {
+  grid-area: words;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: scroll;
+  justify-content: center;
+  align-items: center;
+}

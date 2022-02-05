@@ -20,66 +20,41 @@ function WordleHelper() {
   }
 
   return (
-    <Grid container spacing={2} direction='row' style={{width: windowSize.width, height: windowSize.height}}>
-      {wordBank !== undefined &&
-        <ButtonGroup
-          style={{
-            position: 'absolute',
-            top: '10px',
-            left: '10px',
-          }}
-        >
-          <Button
-            onClick={() => setWordBank('wordle')}
-            style={{
-              textDecoration: wordBank === 'wordle' ? 'underline' : 'none'
-            }}
-          >
-            Wordle Words
-          </Button>
-          <Button
-            onClick={() => setWordBank('all')}
-            style={{
-              textDecoration: wordBank === 'all' ? 'underline' : 'none'
-            }}
-          >
-            All Words
-          </Button>
-        </ButtonGroup>
-      }
-      <Grid
-        item
-        container
-        xs={6}
-        direction='column'
-        alignItems='center'
-        flexWrap='nowrap'
-        height='100vh'
-        marginTop='50px'
-        overflow='scroll'
-      >
+    <div className='helper-container'>
+      <div className='guesses-container'>
+        {wordBank !== undefined &&
+          <ButtonGroup className='buttons'>
+            <Button
+              onClick={() => setWordBank('wordle')}
+              style={{
+                textDecoration: wordBank === 'wordle' ? 'underline' : 'none'
+              }}
+            >
+              Wordle Words
+            </Button>
+            <Button
+              onClick={() => setWordBank('all')}
+              style={{
+                textDecoration: wordBank === 'all' ? 'underline' : 'none'
+              }}
+            >
+              All Words
+            </Button>
+          </ButtonGroup>
+        }
         {guesses.map(guess => <GuessContainer
             key={guess.id}
             guess={guess}
           />
         )}
-      </Grid>
-      <Grid
-        item
-        container
-        xs={6}
-        pt='50px'
-        justifyContent='center'
-        alignItems='center'
-        height='100vh'
-        overflow='scroll'
-      >
+      </div>
+      <div className='words-container'>
         {possibleWords.map(word => {
           return <div style={{padding: '15px', textAlign: 'center', fontFamily: 'monospace', fontSize: '16px'}}
                       key={word.toString()}>{word.toString()}</div>
         })}
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }
 
