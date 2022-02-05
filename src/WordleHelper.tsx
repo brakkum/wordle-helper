@@ -49,10 +49,16 @@ function WordleHelper() {
         )}
       </div>
       <div className='words-container'>
-        {possibleWords.map(word => {
-          return <div style={{padding: '15px', textAlign: 'center', fontFamily: 'monospace', fontSize: '16px'}}
-                      key={word.toString()}>{word.toString()}</div>
-        })}
+        <div className='words-list'>
+          {possibleWords.map(word => {
+            return <div
+              className='word'
+              key={word.toString()}
+            >
+              {word.toString()}
+            </div>
+          })}
+        </div>
       </div>
     </div>
   );
