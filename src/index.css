@@ -30,6 +30,7 @@ code {
   text-align: center;
   max-width: 50%;
   margin: auto;
+  padding: 15px;
 }
 
 @media screen and (max-width: 600px) {
