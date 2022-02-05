@@ -68,10 +68,16 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
     const guess = new Guess(uuidv4());
     guess.updateWord(word);
     guess.setStatus(['', '', '', '', '']);
-    setGuesses([
-      ...guesses,
-      guess,
-    ]);
+    if (guesses.length === 1 && guesses[0].word === '') {
+      setGuesses([
+        guess,
+      ]);
+    } else {
+      setGuesses([
+        ...guesses,
+        guess,
+      ]);
+    }
   };
 
   const removeGuess = (id: string) => {
