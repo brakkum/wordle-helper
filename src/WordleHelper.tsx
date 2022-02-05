@@ -1,4 +1,4 @@
-import {Button, ButtonGroup, Grid} from "@mui/material";
+import {Button, ButtonGroup} from "@mui/material";
 import {useWindowSize} from "./useWindowSize";
 import {useWordleContext} from './WordleContext';
 import {GuessContainer} from './GuessContainer';
