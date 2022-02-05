@@ -25,13 +25,12 @@ export const GuessContainer = ({guess}: {guess: Guess}) => {
       <Grid container direction='row' justifyContent='center' alignItems='center'>
         {guess.wordStatus.map((info, i) => {
           return <Box
+            className='status-box'
             key={`box-${i}`}
             height='20px'
             width='20px'
             m='10px'
-            border='1px solid grey'
             bgcolor={() => resolveInfoToColor(info)}
-            style={{cursor: 'pointer'}}
             onClick={() => {
               const currIndex = possibleStatuses.indexOf(info);
               const next = currIndex === possibleStatuses.length - 1 ? 0 : currIndex + 1;
