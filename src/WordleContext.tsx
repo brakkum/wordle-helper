@@ -13,6 +13,7 @@ const WordleContext = createContext({} as WordleContextValues);
 export interface WordleContextValues {
   words: Word[]
   setWords: (w: Word[]) => void
+  restart: () => void
   guesses: Guess[]
   setGuesses: (g: Guess[]) => void
   addGuess: () => void
@@ -89,6 +90,10 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
     });
     setGuesses([...gs]);
   }
+
+  const restart = () => {
+    setGuesses([new Guess(uuidv4())]);
+  }
   //#endregion
 
   //#region calculate possible words
@@ -98,6 +103,7 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
   const contextItems: WordleContextValues = {
     words,
     setWords,
+    restart,
     guesses,
     setGuesses,
     addGuess,

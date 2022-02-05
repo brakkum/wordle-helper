@@ -9,6 +9,7 @@ function WordleHelper() {
 
   const {
     words,
+    restart,
     guesses,
     wordBank,
     setWordBank,
@@ -40,6 +41,12 @@ function WordleHelper() {
               }}
             >
               All Words
+            </Button>
+            <Button
+              onClick={restart}
+              color='error'
+            >
+              Start Over
             </Button>
           </ButtonGroup>
         }
