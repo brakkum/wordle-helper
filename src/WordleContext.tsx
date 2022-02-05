@@ -16,6 +16,7 @@ export interface WordleContextValues {
   guesses: Guess[]
   setGuesses: (g: Guess[]) => void
   addGuess: () => void
+  addGuessWord: (w: string) => void
   removeGuess: (id: string) => void
   updateGuessWord: (id: string, word: string) => void
   updateGuessStatus: (id: string, status: LetterStatus[]) => void
@@ -54,6 +55,13 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
     ]);
   };
 
+  const addGuessWord = (w: string) => {
+    setGuesses([
+      ...guesses,
+      new Guess(uuidv4(), w),
+    ])
+  };
+
   const removeGuess = (id: string) => {
     setGuesses([...guesses.filter(g => g.id !== id)]);
   };
@@ -90,6 +98,7 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
     guesses,
     setGuesses,
     addGuess,
+    addGuessWord,
     removeGuess,
     updateGuessWord,
     updateGuessStatus,

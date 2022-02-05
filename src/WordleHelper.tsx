@@ -12,6 +12,7 @@ function WordleHelper() {
     guesses,
     wordBank,
     setWordBank,
+    addGuessWord,
     possibleWords,
   } = useWordleContext();
 
@@ -47,6 +48,9 @@ function WordleHelper() {
             guess={guess}
           />
         )}
+        <p className='helper-hint'>
+          (ps: you can click a word to make it your next guess)
+        </p>
       </div>
       <div className='words-container'>
         <div className='words-list'>
@@ -54,6 +58,7 @@ function WordleHelper() {
             return <div
               className='word'
               key={word.toString()}
+              onClick={() => addGuessWord(word.toString())}
             >
               {word.toString()}
             </div>
