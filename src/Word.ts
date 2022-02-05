@@ -1,3 +1,4 @@
+import {Guess} from './Guess';
 
 export class Word {
   private readonly str: string;
@@ -26,5 +27,18 @@ export class Word {
       }
     });
     return contains;
+  }
+
+  public matchesGuesses(guesses: Guess[]): boolean {
+    for (const guess of guesses) {
+      if (!this.matchesGuess(guess)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public matchesGuess(guess: Guess): boolean {
+    return true;
   }
 }
