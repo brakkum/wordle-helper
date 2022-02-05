@@ -65,6 +65,15 @@ export class Word {
       }
     }
 
+    for (let letter in guess.neverPositionLetters) {
+      for (let i = 0; i < guess.neverPositionLetters[letter].length; i++) {
+        const position = guess.neverPositionLetters[letter][i];
+        if (this.str[position] === letter) {
+          return false;
+        }
+      }
+    }
+
     return true;
   }
 }

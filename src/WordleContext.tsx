@@ -74,7 +74,9 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
   //#endregion
 
   //#region calculate possible words
+  console.log(guesses)
   let possibleWords = words.filter(word => word.matchesGuesses(guesses));
+  // console.log(possibleWords)
   //#endregion
 
   const contextItems: WordleContextValues = {

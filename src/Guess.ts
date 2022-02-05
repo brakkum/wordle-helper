@@ -6,6 +6,7 @@ export class Guess {
   wordStatus: [LetterStatus, LetterStatus, LetterStatus, LetterStatus, LetterStatus] = ['', '', '', '', ''];
   definitePositionLetters: {[i: number]: string} = {};
   possiblePositionLetters: {[c: string]: number[]} = {};
+  neverPositionLetters: {[c: string]: number[]} = {};
 
   public constructor(id: string) {
     this.id = id;
@@ -24,16 +25,17 @@ export class Guess {
   private updateStatus = () => {
     let definitePositionLetters: {[k: number]: string} = {};
     let possiblePositionLetters: {[l: string]: number[]} = {};
+    let neverPositionLetters: {[c: string]: number[]} = {};
 
     for (let i = 0; i < 5; i++) {
       definitePositionLetters[i] = '';
     }
 
-    this.wordStatus.forEach((status, i) => {
+    this.wordStatus.forEach((status, index) => {
       if (status === 'is') {
-        definitePositionLetters[i] = this.word[i];
+        definitePositionLetters[index] = this.word[index];
       }
-    }, []);
+    });
 
     this.wordStatus.forEach((status, letterIndex) => {
       const letter = this.word[letterIndex];
@@ -49,10 +51,22 @@ export class Guess {
             possiblePositionLetters[letter].push(i);
           }
         }
+      } else if (status === '') {
+        if (neverPositionLetters[letter] === undefined) {
+          neverPositionLetters[letter] = [];
+        }
+        for (let i = 0; i < 5; i++) {
+          if (!definitePositionLetters[i]) {
+            if (!neverPositionLetters[letter].includes(i)) {
+              neverPositionLetters[letter].push(i);
+            }
+          }
+        }
       }
     });
 
     this.definitePositionLetters = definitePositionLetters;
     this.possiblePositionLetters = possiblePositionLetters;
+    this.neverPositionLetters = neverPositionLetters;
   }
 }
