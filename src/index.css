@@ -85,8 +85,8 @@ code {
 }
 
 .word {
-  padding: 1px 2px;
-  margin: 10px;
+  padding: 2px 4px;
+  margin: 10px auto;
   display: inline;
   font-family: monospace;
   font-size: 16px;
