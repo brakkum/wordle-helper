@@ -27,26 +27,11 @@ export interface WordleContextValues {
 const WordleProvider = ({children}: { children: React.ReactElement }) => {
 
   const [words, setWords] = useState<Word[]>([]);
-  const [guesses, setGuesses] = useState<Guess[]>([]);
+  const [guesses, setGuesses] = useState<Guess[]>([new Guess(uuidv4())]);
   const [wordBank, setWordBank] = useLocalStorage<WordBank>('word-bank', 'wordle');
-
-  //#region initial setup
-  useEffect(() => {
-    setGuesses([
-      new Guess(uuidv4()),
-    ]);
-    setCurrentWordBank();
-  }, []);
-  //#endregion
 
   //#useEffects
   useEffect(() => {
-    setCurrentWordBank();
-  }, [wordBank]);
-  //#endregion
-
-  //#region functions
-  const setCurrentWordBank = () => {
     let rawWords: string[] = []
     if (wordBank === 'wordle') {
       rawWords = wordle_words;
@@ -58,8 +43,10 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
       w.push(new Word(rw));
     });
     setWords(w);
-  };
+  }, [wordBank]);
+  //#endregion
 
+  //#region functions
   const addGuess = () => {
     setGuesses([
       ...guesses,

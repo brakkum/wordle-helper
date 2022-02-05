@@ -1,5 +1,4 @@
 import {Guess} from './Guess';
-import {stat} from "fs";
 
 export class Word {
   private readonly str: string;
