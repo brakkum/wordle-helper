@@ -8,9 +8,8 @@ export class Guess {
   possiblePositionLetters: {[c: string]: number[]} = {};
   neverPositionLetters: {[c: string]: number[]} = {};
 
-  public constructor(id: string, word: string = '') {
+  public constructor(id: string) {
     this.id = id;
-    this.word = word;
   }
 
   public updateWord = (word: string) => {

@@ -55,11 +55,14 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
     ]);
   };
 
-  const addGuessWord = (w: string) => {
+  const addGuessWord = (word: string) => {
+    const guess = new Guess(uuidv4());
+    guess.updateWord(word);
+    guess.setStatus(['', '', '', '', '']);
     setGuesses([
       ...guesses,
-      new Guess(uuidv4(), w),
-    ])
+      guess,
+    ]);
   };
 
   const removeGuess = (id: string) => {
