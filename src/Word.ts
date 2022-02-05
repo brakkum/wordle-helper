@@ -1,4 +1,5 @@
 import {Guess} from './Guess';
+import {stat} from "fs";
 
 export class Word {
   private readonly str: string;
@@ -39,6 +40,31 @@ export class Word {
   }
 
   public matchesGuess(guess: Guess): boolean {
+
+    if (guess.word === this.str) {
+      return false;
+    }
+
+    for (let i = 0; i < guess.wordStatus.length; i++) {
+      const status = guess.wordStatus[i];
+      if (status === 'is' && guess.word[i] !== this.str[i]) {
+        return false;
+      }
+    }
+
+    for (let letter in guess.possiblePositionLetters) {
+      let hasLetter = false;
+      for (let i = 0; i < guess.possiblePositionLetters[letter].length; i++) {
+        const position = guess.possiblePositionLetters[letter][i];
+        if (this.str[position] === letter) {
+          hasLetter = true;
+        }
+      }
+      if (!hasLetter) {
+        return false;
+      }
+    }
+
     return true;
   }
 }

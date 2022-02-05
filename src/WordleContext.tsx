@@ -33,11 +33,9 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
       w.push(new Word(rw));
     });
     setWords(w);
-    setGuesses([{
-      id: uuidv4(),
-      word: '',
-      wordStatus: ['', '', '', '', ''],
-    }]);
+    setGuesses([
+      new Guess(uuidv4()),
+    ]);
   }, []);
   //#endregion
 
@@ -45,11 +43,7 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
   const addGuess = () => {
     setGuesses([
       ...guesses,
-      {
-        id: uuidv4(),
-        word: '',
-        wordStatus: ['', '', '', '', ''],
-      }
+      new Guess(uuidv4()),
     ]);
   };
 
@@ -61,7 +55,7 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
     const gs = [...guesses];
     gs.forEach(g => {
       if (g.id === id) {
-        g.word = only5Chars(word);
+        g.updateWord(only5Chars(word));
       }
     })
     setGuesses([...gs]);
@@ -72,7 +66,7 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
     gs.forEach(g => {
       if (g.id === id) {
         // @ts-ignore - ignore error about length of status array
-        g.wordStatus = status;
+        g.setStatus(status);
       }
     });
     setGuesses([...gs]);
@@ -80,68 +74,7 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
   //#endregion
 
   //#region calculate possible words
-  let definitePositionLetters: {[k: number]: string} = {};
-  let possiblePositionLetters: {[l: string]: number[]} = {};
-
-  for (let i = 0; i < 5; i++) {
-    definitePositionLetters[i] = '';
-  }
-
-  guesses.forEach(guess => {
-    guess.wordStatus.forEach((status, i) => {
-      if (status === 'is') {
-        definitePositionLetters[i] = guess.word[i];
-      }
-    }, []);
-  });
-
-  guesses.forEach(guess => {
-    guess.wordStatus.forEach((status, letterIndex) => {
-      const letter = guess.word[letterIndex];
-
-      if (status === 'has') {
-        if (possiblePositionLetters[letter] === undefined) {
-          possiblePositionLetters[letter] = [];
-        }
-        for (let i = 0; i < 5; i++) {
-          if (definitePositionLetters[i]) {
-            continue;
-          } if (i !== letterIndex) {
-            possiblePositionLetters[letter].push(i);
-          }
-        }
-      }
-    });
-  });
-
-  console.log(definitePositionLetters)
-  console.log(possiblePositionLetters)
-
-  let possibleWords = words.filter(word => {
-    const wordString = word.toString();
-    for (let i = 0; i < 5; i++) {
-      if (!definitePositionLetters[i]) {
-        continue;
-      }
-      if (definitePositionLetters[i] !== wordString[i]) {
-        return false
-      }
-    }
-
-    let hasPossibleLettersMatch = true;
-    Object.entries(possiblePositionLetters).forEach(([letter, indexes]) => {
-      const hasLetterIndexMatch: boolean = indexes.reduce((hasMatch: boolean, currentIndex) => {
-        if (hasMatch) return true;
-        return wordString[currentIndex] === letter;
-      }, false);
-      if (!hasLetterIndexMatch) {
-        hasPossibleLettersMatch = false;
-      }
-    });
-
-    return hasPossibleLettersMatch;
-  });
-  console.log(possibleWords)
+  let possibleWords = words.filter(word => word.matchesGuesses(guesses));
   //#endregion
 
   const contextItems: WordleContextValues = {
