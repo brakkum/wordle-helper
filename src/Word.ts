@@ -66,6 +66,9 @@ export class Word {
     }
 
     for (let letter in guess.neverPositionLetters) {
+      if (guess.possiblePositionLetters[letter] !== undefined) {
+        continue;
+      }
       for (let i = 0; i < guess.neverPositionLetters[letter].length; i++) {
         const position = guess.neverPositionLetters[letter][i];
         if (this.str[position] === letter) {
