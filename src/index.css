@@ -21,6 +21,10 @@ code {
   grid-template-rows: 100vh;
 }
 
+.helper-container > * {
+  padding: 5px;
+}
+
 @media screen and (max-width: 600px) {
   .helper-container {
     grid-template-areas:
@@ -38,6 +42,16 @@ code {
   flex-direction: column;
   flex-wrap: nowrap;
   overflow: scroll;
+  border-right: 1px solid grey;
+  border-bottom: none;
+}
+
+@media screen and (max-width: 600px) {
+
+  .guesses-container {
+    border-right: none;
+    border-bottom: 1px solid grey;
+  }
 }
 
 .guesses-container .buttons {
