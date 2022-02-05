@@ -3,8 +3,7 @@ import {Word} from './Word';
 import {Guess} from './Guess';
 import {raw_words} from './raw_words';
 import {v4 as uuidv4} from 'uuid';
-import {range} from 'lodash';
-import {getAlphabet, only5Chars} from './tools';
+import {only5Chars} from './tools';
 import {LetterStatus} from './LetterStatus';
 
 const WordleContext = createContext({} as WordleContextValues);
@@ -74,9 +73,7 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
   //#endregion
 
   //#region calculate possible words
-  console.log(guesses)
   let possibleWords = words.filter(word => word.matchesGuesses(guesses));
-  // console.log(possibleWords)
   //#endregion
 
   const contextItems: WordleContextValues = {
