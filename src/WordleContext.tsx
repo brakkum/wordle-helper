@@ -1,10 +1,12 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import {Word} from './Word';
 import {Guess} from './Guess';
-import {raw_words} from './raw_words';
+import {all_words, wordle_words} from './raw_words';
 import {v4 as uuidv4} from 'uuid';
 import {only5Chars} from './tools';
 import {LetterStatus} from './LetterStatus';
+import {WordBank} from "./WordBank";
+import {useLocalStorage} from "react-use";
 
 const WordleContext = createContext({} as WordleContextValues);
 
@@ -18,27 +20,46 @@ export interface WordleContextValues {
   updateGuessWord: (id: string, word: string) => void
   updateGuessStatus: (id: string, status: LetterStatus[]) => void
   possibleWords: Word[]
+  wordBank: WordBank | undefined
+  setWordBank: (wb: WordBank) => void
 }
 
-const WordleProvider = ({ children }: { children: React.ReactElement }) => {
+const WordleProvider = ({children}: { children: React.ReactElement }) => {
 
   const [words, setWords] = useState<Word[]>([]);
   const [guesses, setGuesses] = useState<Guess[]>([]);
+  const [wordBank, setWordBank] = useLocalStorage<WordBank>('word-bank', 'wordle');
 
   //#region initial setup
   useEffect(() => {
-    const w: Word[] = [];
-    raw_words.forEach(rw => {
-      w.push(new Word(rw));
-    });
-    setWords(w);
     setGuesses([
       new Guess(uuidv4()),
     ]);
+    setCurrentWordBank();
   }, []);
   //#endregion
 
+  //#useEffects
+  useEffect(() => {
+    setCurrentWordBank();
+  }, [wordBank]);
+  //#endregion
+
   //#region functions
+  const setCurrentWordBank = () => {
+    let rawWords: string[] = []
+    if (wordBank === 'wordle') {
+      rawWords = wordle_words;
+    } else if (wordBank === 'all') {
+      rawWords = all_words;
+    }
+    const w: Word[] = [];
+    rawWords.forEach(rw => {
+      w.push(new Word(rw));
+    });
+    setWords(w);
+  };
+
   const addGuess = () => {
     setGuesses([
       ...guesses,
@@ -85,6 +106,8 @@ const WordleProvider = ({ children }: { children: React.ReactElement }) => {
     removeGuess,
     updateGuessWord,
     updateGuessStatus,
+    wordBank,
+    setWordBank,
     possibleWords,
   }
 
