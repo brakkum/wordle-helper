@@ -13,6 +13,8 @@ export const GuessContainer = ({guess}: {guess: Guess}) => {
     updateGuessStatus,
   } = useWordleContext();
 
+  const isLastGuess = guesses[guesses.length - 1].id === guess.id;
+
   return (
     <Grid m='10px'>
       <TextField
@@ -46,6 +48,7 @@ export const GuessContainer = ({guess}: {guess: Guess}) => {
       <div>
         <Button
           onClick={addGuess}
+          disabled={!isLastGuess}
         >
           Add
         </Button>
