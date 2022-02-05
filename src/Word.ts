@@ -48,6 +48,8 @@ export class Word {
       const status = guess.wordStatus[i];
       if (status === 'is' && guess.word[i] !== this.str[i]) {
         return false;
+      } else if (status === 'has' && guess.word[i] === this.str[i]) {
+        return false;
       }
     }
 

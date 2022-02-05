@@ -46,6 +46,14 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
     });
     setWords(w);
   }, [wordBank]);
+
+  // use if need particular state to debug
+  // useEffect(() => {
+  //   let g = new Guess(uuidv4());
+  //   g.updateWord('grant');
+  //   g.setStatus(['has', '', '', '', '']);
+  //   setGuesses([g]);
+  // }, []);
   //#endregion
 
   //#region functions
