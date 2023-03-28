@@ -15,6 +15,7 @@ function WordleHelper() {
     setWordBank,
     addGuessWord,
     possibleWords,
+    numPossibleWords,
   } = useWordleContext();
 
   if (words.length === 0 || !windowSize.width || !windowSize.height || guesses.length === 0) {
@@ -61,6 +62,9 @@ function WordleHelper() {
       </div>
       <div className='words-container'>
         <div className='words-list'>
+          <div className='words-count-container'>
+            <span className='words-count'>{numPossibleWords}</span>
+          </div>
           {possibleWords.map(word => {
             return <div
               className='word'

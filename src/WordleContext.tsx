@@ -24,6 +24,7 @@ export interface WordleContextValues {
   possibleWords: Word[]
   wordBank: WordBank | undefined
   setWordBank: (wb: WordBank) => void
+  numPossibleWords: number
 }
 
 const WordleProvider = ({children}: { children: React.ReactElement }) => {
@@ -114,6 +115,8 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
   let possibleWords = words.filter(word => word.matchesGuesses(guesses));
   //#endregion
 
+  const numPossibleWords = possibleWords.length;
+
   const contextItems: WordleContextValues = {
     words,
     setWords,
@@ -128,6 +131,7 @@ const WordleProvider = ({children}: { children: React.ReactElement }) => {
     wordBank,
     setWordBank,
     possibleWords,
+    numPossibleWords,
   }
 
   return <WordleContext.Provider value={contextItems}>

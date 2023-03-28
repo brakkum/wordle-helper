@@ -93,6 +93,17 @@ code {
   flex-wrap: wrap;
 }
 
+.words-count-container {
+  z-index: -1;
+  position: absolute;
+}
+
+.words-count {
+  color: lightgrey;
+  font-size: 96px;
+  padding: 10px;
+}
+
 .word {
   padding: 2px 4px;
   margin: 10px auto;
